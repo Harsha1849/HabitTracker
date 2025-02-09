@@ -11,3 +11,5 @@ A Habit Tracker is a Java-based application where a user can add, track, and upd
 ✔️ ArrayLists (to store habits)
 
 ✔️ File Handling (optional) (to save data)
+
+java -cp bin HabitTrackerApp to run
