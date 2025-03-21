@@ -1,6 +1,6 @@
 # HabitTracker
 
-A Habit Tracker is a Java-based application where a user can add, track, and update daily habits (e.g., Exercise, Reading, Meditation).
+A Habit Tracker is a Java-based application where a user can add, track, and update daily habits (e.g., Exercise, Reading, Meditation). Under development, more features to be added soon
 
 🔹 Concepts Used:
 
