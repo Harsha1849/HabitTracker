@@ -22,6 +22,10 @@ public class User {
 
     // Display all habits
     public void displayHabits() {
+        if (habits.isEmpty()) {
+            System.out.println("⚠️ No habits found.");
+            return;
+        }
         System.out.println("Habits for " + username + ":");
         for (Habit habit : habits) {
             habit.displayHabit();
@@ -36,7 +40,7 @@ public class User {
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.out.println("Error saving habits: " + e.getMessage());
+            System.out.println("⚠️ Error saving habits: " + e.getMessage());
         }
     }
 
@@ -53,7 +57,7 @@ public class User {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error loading habits: " + e.getMessage());
+            System.out.println("⚠️ Error loading habits: " + e.getMessage());
         }
     }
 

@@ -22,11 +22,17 @@ public class Habit {
     public int getProgress() { return progress; }
     public int getGoal() { return goal; }
 
-    // Update progress
+    // Update progress (Prevents exceeding the goal)
     public void completeHabit() { 
-        if (progress < goal) progress++; 
+        if (progress >= goal) {  
+            System.out.println("⚠️ Habit already completed for today!"); 
+            return;
+        }
+        progress++;
+        System.out.println("✅ Habit progress updated!");
     }
-
+    
+    
     // Display habit details
     public void displayHabit() {
         System.out.println(name + " Progress: " + progress + "/" + goal);
