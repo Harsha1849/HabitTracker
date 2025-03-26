@@ -3,7 +3,10 @@ import java.util.Scanner;
 public class HabitTrackerApp {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        User user = new User("John Doe");
+        System.out.print("Enter your name: ");
+        String userName = scanner.nextLine();
+
+        User user = new User(userName);
 
         while (true) {
             System.out.println("\nHabit Tracker Menu:");
@@ -12,54 +15,36 @@ public class HabitTrackerApp {
             System.out.println("3. Complete Habit");
             System.out.println("4. Exit");
 
-            int choice;
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-            } else {
-                System.out.println("⚠️ Invalid input! Please enter a number.");
-                scanner.next(); // Discard invalid input
-                continue;
-            }
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1:
                     System.out.print("Enter habit name: ");
-                    String name = scanner.nextLine();
-                    System.out.print("Enter goal (times per day): ");
-                    int goal = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-                    user.addHabit(new Habit(name, goal));
-                    System.out.println("✅ Habit added successfully!");
-                    break;
-                case 2:
-                    user.displayHabits();
-                    break;
-                case 3:
-                    if (user.getHabits().isEmpty()) {
-                        System.out.println("⚠️ No habits found. Add one first!");
-                        break;
-                    }
-                    System.out.print("Enter habit name to mark as completed: ");
                     String habitName = scanner.nextLine();
-                    boolean found = false;
-                    for (Habit habit : user.getHabits()) {
-                        if (habit.getName().equalsIgnoreCase(habitName)) {
-                            habit.completeHabit();
-                            user.saveHabitsToFile(); // Save progress
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) System.out.println("⚠️ Habit not found! Check spelling.");
+                    user.addHabit(habitName);
+                    System.out.println("Habit added successfully!");
                     break;
-                
+
+                case 2:
+                    user.viewHabits();
+                    break;
+
+                case 3:
+                    System.out.print("Enter habit name to mark as completed: ");
+                    String habitToComplete = scanner.nextLine();
+                    user.completeHabit(habitToComplete);
+                    System.out.println("Habit progress updated!");
+                    break;
+
                 case 4:
-                    System.out.println("🚀 Exiting Habit Tracker. Goodbye!");
+                    System.out.println("Exiting Habit Tracker. Goodbye!");
                     scanner.close();
                     return;
+
                 default:
-                    System.out.println("⚠️ Invalid choice. Try again.");
+                    System.out.println("Invalid choice. Try again.");
             }
         }
     }

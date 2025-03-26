@@ -1,68 +1,42 @@
-import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class User {
-    private String username;
+    private String name;
     private ArrayList<Habit> habits;
-    private static final String FILE_NAME = "habits.txt"; // File to store habits
 
-    // Constructor
-    public User(String username) {
-        this.username = username;
+    public User(String name) {
+        this.name = name;
         this.habits = new ArrayList<>();
-        loadHabitsFromFile(); // Load habits on startup
     }
 
-    // Add a new habit
-    public void addHabit(Habit habit) {
-        habits.add(habit);
-        saveHabitsToFile(); // Save after adding
+    public String getName() {
+        return name;
     }
 
-    // Display all habits
-    public void displayHabits() {
+    public void addHabit(String habitName, int goal) {
+        habits.add(new Habit(habitName, goal));
+        System.out.println("Habit added: " + habitName);
+    }
+
+    public void viewHabits() {
         if (habits.isEmpty()) {
-            System.out.println("⚠️ No habits found.");
+            System.out.println("No habits tracked yet.");
             return;
         }
-        System.out.println("Habits for " + username + ":");
+        System.out.println("Habits for " + name + ":");
         for (Habit habit : habits) {
-            habit.displayHabit();
+            System.out.println(habit);
         }
     }
 
-    // Save habits to file
-    public void saveHabitsToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME))) {
-            for (Habit habit : habits) {
-                writer.write(habit.getName() + "," + habit.getProgress() + "," + habit.getGoal());
-                writer.newLine();
+    public void completeHabit(String habitName) {
+        for (Habit habit : habits) {
+            if (habit.getName().equalsIgnoreCase(habitName)) {
+                habit.completeHabit();
+                System.out.println("Habit progress updated!");
+                return;
             }
-        } catch (IOException e) {
-            System.out.println("⚠️ Error saving habits: " + e.getMessage());
         }
-    }
-
-    // Load habits from file
-    public void loadHabitsFromFile() {
-        File file = new File(FILE_NAME);
-        if (!file.exists()) return;
-
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String[] data = scanner.nextLine().split(",");
-                if (data.length == 3) {
-                    habits.add(new Habit(data[0], Integer.parseInt(data[2]), Integer.parseInt(data[1])));
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("⚠️ Error loading habits: " + e.getMessage());
-        }
-    }
-
-    // Get list of habits
-    public ArrayList<Habit> getHabits() {
-        return habits;
+        System.out.println("Habit not found!");
     }
 }
